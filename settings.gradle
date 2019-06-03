@@ -15,6 +15,8 @@ include ':lottery-common-uid'
 project (':lottery-common-uid').projectDir = new File(rootDir, 'lottery-common/lottery-common-uid')
 include ':lottery-common-utils'
 project (':lottery-common-utils').projectDir = new File(rootDir, 'lottery-common/lottery-common-utils')
+include ':lottery-common-data-jpa'
+project (':lottery-common-data-jpa').projectDir = new File(rootDir, 'lottery-common/lottery-common-data-jpa')
 
 
 include ':lottery-account-api'

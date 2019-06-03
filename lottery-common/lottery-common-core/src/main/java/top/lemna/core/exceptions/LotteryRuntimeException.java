@@ -1,15 +1,14 @@
-package top.lemna.account.exceptions;
+package top.lemna.core.exceptions;
 
-import top.lemna.core.exceptions.LotteryRuntimeException;
 
-public class AccountBizException extends LotteryRuntimeException {
+public class LotteryRuntimeException extends RuntimeException {
   private static final long serialVersionUID = 1L;
 
-  public AccountBizException(String message) {
+  public LotteryRuntimeException(String message) {
     super(message);
   }
 
-  public AccountBizException(String message, Throwable cause) {
+  public LotteryRuntimeException(String message, Throwable cause) {
     super(message, cause);
   }
 

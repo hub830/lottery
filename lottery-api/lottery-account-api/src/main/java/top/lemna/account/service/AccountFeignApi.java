@@ -13,6 +13,6 @@ import top.lemna.account.model.vo.AccountVo;
 public interface AccountFeignApi {
 
   @PostMapping(value = "/api/account")
-  AccountVo reduceStock(@RequestBody CreateAccountDto productReduceStockDto);
+  AccountVo create(@RequestBody CreateAccountDto createAccountDto);
 }
 
