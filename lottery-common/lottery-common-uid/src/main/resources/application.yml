@@ -1,0 +1,27 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: spring-cloud-test-provider-product
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.10.10/test?useUnicode=true&characterEncoding=UTF8
+    username: root
+    password: 123456
+  jpa:
+    generate-ddl: true
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+
+
+security:
+  oauth2:
+    client:
+      clientId: ios
+      clientSecret: ios
+      accessTokenUri: http://localhost:8210/oauth/token
+      userAuthorizationUri: http://localhost:8210/auth/oauth/authorize
+    resource:
+      id: product-service
+      user-info-uri: http://localhost:8210/user
+      prefer-token-info: false

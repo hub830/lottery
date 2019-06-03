@@ -1,0 +1,44 @@
+pluginManagement {
+	repositories {
+		gradlePluginPortal()
+	}
+}
+rootProject.name = 'lottery'
+
+include 'lottery-eureka-server'
+include 'lottery-authentication-server'
+include 'lottery-gateway-server'
+
+include ':lottery-common-core'
+project (':lottery-common-core').projectDir = new File(rootDir, 'lottery-common/lottery-common-core')
+include ':lottery-common-uid'
+project (':lottery-common-uid').projectDir = new File(rootDir, 'lottery-common/lottery-common-uid')
+include ':lottery-common-utils'
+project (':lottery-common-utils').projectDir = new File(rootDir, 'lottery-common/lottery-common-utils')
+
+
+include ':lottery-account-api'
+project (':lottery-account-api').projectDir = new File(rootDir, 'lottery-api/lottery-account-api')
+include ':lottery-game-api'
+project (':lottery-game-api').projectDir = new File(rootDir, 'lottery-api/lottery-game-api')
+include ':lottery-order-api'
+project (':lottery-order-api').projectDir = new File(rootDir, 'lottery-api/lottery-order-api')
+include ':lottery-t3d-api'
+project (':lottery-t3d-api').projectDir = new File(rootDir, 'lottery-api/lottery-t3d-api')
+include ':lottery-ticket-api'
+project (':lottery-ticket-api').projectDir = new File(rootDir, 'lottery-api/lottery-ticket-api')
+include ':lottery-user-api'
+project (':lottery-user-api').projectDir = new File(rootDir, 'lottery-api/lottery-user-api')
+
+include ':lottery-account-service'
+project (':lottery-account-service').projectDir = new File(rootDir, 'lottery-service/lottery-account-service')
+include ':lottery-game-service'
+project (':lottery-game-service').projectDir = new File(rootDir, 'lottery-service/lottery-game-service')
+include ':lottery-order-service'
+project (':lottery-order-service').projectDir = new File(rootDir, 'lottery-service/lottery-order-service')
+include ':lottery-t3d-service'
+project (':lottery-t3d-service').projectDir = new File(rootDir, 'lottery-service/lottery-t3d-service')
+include ':lottery-ticket-service'
+project (':lottery-ticket-service').projectDir = new File(rootDir, 'lottery-service/lottery-ticket-service')
+include ':lottery-user-service'
+project (':lottery-user-service').projectDir = new File(rootDir, 'lottery-service/lottery-user-service')

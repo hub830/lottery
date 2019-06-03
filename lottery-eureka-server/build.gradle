@@ -1,0 +1,7 @@
+dependencies {
+  implementation 'javax.xml.bind:jaxb-api'
+  implementation 'com.sun.xml.bind:jaxb-impl:2.3.0'
+  implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.0'
+  implementation 'javax.activation:activation:1.1.1'
+  compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-server')
+}
