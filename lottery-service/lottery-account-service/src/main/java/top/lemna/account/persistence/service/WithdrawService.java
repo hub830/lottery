@@ -1,7 +1,6 @@
 package top.lemna.account.persistence.service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +12,7 @@ import top.lemna.account.model.constant.WithdrawChannel;
 import top.lemna.account.model.constant.WithdrawStatus;
 import top.lemna.account.persistence.domain.Withdraw;
 import top.lemna.account.persistence.repository.WithdrawRepository;
+import top.lemna.data.jpa.exception.RecordNotExistException;
 import top.lemna.data.jpa.service.BaseService;
 
 @Slf4j
@@ -30,8 +30,12 @@ public class WithdrawService extends BaseService<Withdraw> {
   @Autowired
   private AccountService accountService;
 
-  @PersistenceContext
-  private EntityManager em;
+
+  private Withdraw findByWithdrawNo(Long withdrawNo) {
+    Optional<Withdraw> optional = repository.findByWithdrawNo(withdrawNo);
+    return optional.orElseThrow(() -> new RecordNotExistException(String.valueOf(withdrawNo)));
+  }
+
 
   private Withdraw create(Long accountNo, Long amount, WithdrawChannel channel, String remark) {
     long uid = uidGenerator.getUID();
@@ -54,7 +58,8 @@ public class WithdrawService extends BaseService<Withdraw> {
   @Transactional
   public Withdraw place(Long accountNo, Long amount, WithdrawChannel channel, String remark) {
     Withdraw withdraw = create(accountNo, amount, channel, remark);
-    accountService.debit(accountNo, amount, withdraw.getWithdrawNo(), BillType.WITHDRAW_CASH, remark);
+    accountService.debit(accountNo, amount, withdraw.getWithdrawNo(), BillType.WITHDRAW_CASH,
+        remark);
     return withdraw;
   }
 
@@ -66,7 +71,7 @@ public class WithdrawService extends BaseService<Withdraw> {
    */
   @Transactional
   public void success(Long withdrawNo) {
-    Withdraw withdraw = repository.findByWithdrawNo(withdrawNo);
+    Withdraw withdraw = findByWithdrawNo(withdrawNo);
     if (withdraw.getStatus() != WithdrawStatus.PROCESSING) {
       log.error("提现记录状态不正确，orderNo:{}", withdrawNo);
       throw new WithdrawStatusException(withdrawNo, withdraw.getStatus(),
@@ -85,7 +90,7 @@ public class WithdrawService extends BaseService<Withdraw> {
    */
   @Transactional
   public void cancel(Long withdrawNo, String remark) {
-    Withdraw withdraw = repository.findByWithdrawNo(withdrawNo);
+    Withdraw withdraw = findByWithdrawNo(withdrawNo);
 
     if (withdraw.getStatus() != WithdrawStatus.PROCESSING) {
       log.error("提现记录状态不正确，orderNo:{}", withdrawNo);
