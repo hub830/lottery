@@ -42,4 +42,12 @@ public class Account extends AutoIdEntity {
   @Enumerated(EnumType.STRING)
   private YesNo block;
 
+  public Account(Long accountNo, String accountName) {
+    super();
+    this.accountNo = accountNo;
+    this.accountName = accountName;
+    this.balance = 0L;
+    this.block = YesNo.NO;
+  }
+
 }

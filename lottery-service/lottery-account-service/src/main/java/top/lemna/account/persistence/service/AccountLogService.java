@@ -1,81 +1,73 @@
 package top.lemna.account.persistence.service;
 
-import com.baidu.fsg.uid.UidGenerator;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import net.zhongss.kaolabao.core.base.service.BaseService;
-import net.zhongss.kaolabao.core.enums.BillType;
-import net.zhongss.kaolabao.core.enums.RecordType;
-import net.zhongss.kaolabao.core.persistence.account.domain.AvailableBalanceLog;
-import net.zhongss.kaolabao.core.persistence.account.repository.AvailableBalanceLogRepository;
-import net.zhongss.kaolabao.core.persistence.account.service.dto.AvailableDto;
-import org.apache.commons.lang3.StringUtils;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.baidu.fsg.uid.UidGenerator;
+
+import top.lemna.account.model.constant.BillType;
+import top.lemna.account.persistence.domain.AccountLog;
+import top.lemna.account.persistence.repository.AccountLogRepository;
+import top.lemna.data.jpa.service.BaseService;
+
 @Service
 @Transactional
-public class AccountLogService extends BaseService<AvailableBalanceLog> {
+public class AccountLogService extends BaseService<AccountLog> {
 
-  @SuppressWarnings("unused")
-  @Autowired
-  private AvailableBalanceLogRepository repository;
+	@SuppressWarnings("unused")
+	@Autowired
+	private AccountLogRepository repository;
 
-  @Autowired
-  private AccountService accountService;
+	@Autowired
+	private UidGenerator uidGenerator;
 
-  @Autowired
-  private UidGenerator uidGenerator;
+	/**
+	 * 借记操作
+	 * 
+	 * @param accountNo
+	 * @param amount
+	 * @param externalNo
+	 * @param beforeBalance
+	 * @param type
+	 * @param remark
+	 * @return
+	 */
+	AccountLog credit(Long accountNo, Long amount, Long externalNo, Long beforeBalance, BillType type, String remark) {
+		AccountLog accountLog = AccountLog.builder()//
+				.withLogNo(uidGenerator.getUID())//
+				.withAccountNo(accountNo)//
+				.withExternalNo(String.valueOf(externalNo))//
+				.withAmount(amount)//
+				.withBeforeBalance(beforeBalance)//
+				.withAfterBalance(beforeBalance + amount)//
+				.withType(type)//
+				.withRemark(remark).build();
+		return save(accountLog);
+	}
 
-  public AvailableBalanceLog create(Long amount,Long accountNo, Long orderNo, Long externalNo,
-      Long beforeBalance, Long afterBalance, BillType type, String remark, RecordType recordType) {
-    AvailableBalanceLog log = new AvailableBalanceLog(accountNo, orderNo, externalNo, beforeBalance,
-        afterBalance, type, remark,amount,recordType);
-    return save(log);
-  }
+	/**
+	 * 贷记操作
+	 * 
+	 * @param accountNo
+	 * @param amount
+	 * @param externalNo
+	 * @param beforeBalance
+	 * @param type
+	 * @param remark
+	 * @return
+	 */
+	AccountLog debit(Long accountNo, Long amount, Long externalNo, Long beforeBalance, BillType type, String remark) {
+		AccountLog accountLog = AccountLog.builder()//
+				.withLogNo(uidGenerator.getUID())//
+				.withAccountNo(accountNo)//
+				.withExternalNo(String.valueOf(externalNo))//
+				.withAmount(amount)//
+				.withBeforeBalance(beforeBalance)//
+				.withAfterBalance(beforeBalance - amount)//
+				.withType(type)//
+				.withRemark(remark).build();
+		return save(accountLog);
+	}
 
-  public void saveAll(Set<AvailableBalanceLog> availableBalanceLogSet) {
-    repository.saveAll(availableBalanceLogSet);
-  }
-
-  public Page<AvailableBalanceLog> findAll(AvailableDto dto, Pageable pageable) {
-    Specification<AvailableBalanceLog> specification = getWhereClause(dto);
-    return repository.findAll(specification, pageable);
-  }
-
-  private Specification<AvailableBalanceLog> getWhereClause(AvailableDto dto) {
-    return new Specification<AvailableBalanceLog>() {
-      private static final long serialVersionUID = 1L;
-
-      @Override
-      public Predicate toPredicate(Root<AvailableBalanceLog> root, CriteriaQuery<?> query,
-          CriteriaBuilder cb) {
-        List<Predicate> predicate = new ArrayList<>();
-        predicate.add(cb.equal(root.get("accountId"), dto.getAccountId()));
-        if(dto.getStatus() != null){
-          predicate.add(cb.equal(root.get("type"), dto.getStatus()));
-        }
-        if(StringUtils.isNotBlank(dto.getStartTime())){
-          DateTime dt = new DateTime(dto.getStartTime());
-          predicate.add(cb.greaterThanOrEqualTo(root.get("createTime"), dt.millisOfDay().withMinimumValue().toDate()));
-        }
-        if(StringUtils.isNotBlank(dto.getEndTime())){
-          DateTime dt = new DateTime(dto.getEndTime());
-          predicate.add(cb.lessThanOrEqualTo(root.get("createTime"), dt.millisOfDay().withMaximumValue().toDate()));
-        }
-        Predicate[] pre = new Predicate[predicate.size()];
-        return query.where(predicate.toArray(pre)).getRestriction();
-      }
-    };
-  }
 }

@@ -1,9 +1,0 @@
-dependencies {
-  implementation 'javax.xml.bind:jaxb-api'
-  implementation 'com.sun.xml.bind:jaxb-impl:2.3.0'
-  implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.0'
-  implementation 'javax.activation:activation:1.1.1'
-  implementation "org.springframework.cloud:spring-cloud-starter-security"
-  implementation 'org.springframework.cloud:spring-cloud-starter-oauth2'
-  implementation 'org.springframework.boot:spring-boot-starter-data-redis'  
-}

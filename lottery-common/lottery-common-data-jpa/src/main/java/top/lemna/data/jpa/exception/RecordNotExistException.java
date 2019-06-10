@@ -1,6 +1,5 @@
 package top.lemna.data.jpa.exception;
 
-import java.text.MessageFormat;
 import top.lemna.core.exceptions.LotteryRuntimeException;
 
 public class RecordNotExistException extends LotteryRuntimeException {
@@ -10,14 +9,14 @@ public class RecordNotExistException extends LotteryRuntimeException {
 
   private String recordNo;
 
-  public RecordNotExistException(String recordId) {
+  public RecordNotExistException(Long recordId) {
     super(format("数据库中不存在对应的记录, recordId:{}", recordId));
-    recordId = recordId.toString();
+    this.recordId = String.valueOf(recordId);
   }
 
-  public RecordNotExistException(String recordId, String recordNo) {
-    super(MessageFormat.format("数据库中不存在对应的记录, recordId:{}, recordNo:{}", recordId, recordNo));
-    recordId = recordNo.toString();
+  public RecordNotExistException(String recordId) {
+    super(format("数据库中不存在对应的记录, recordId:{}", recordId));
+    this.recordId = recordId;
   }
 
   public String getRecordId() {

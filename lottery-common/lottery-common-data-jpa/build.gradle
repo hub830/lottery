@@ -1,3 +1,11 @@
+apply from: '../../maven_push.gradle'
+
+jar {
+  enabled = true
+  baseName = archivesBaseName
+  version =  VERSION_NAME
+}
+
 dependencies {
   compile project(":lottery-common-core")
   implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

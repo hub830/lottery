@@ -1,3 +1,11 @@
+apply from: '../../maven_push.gradle'
+
+jar {
+  enabled = true
+  baseName = archivesBaseName
+  version =  VERSION_NAME
+}
+
 dependencies {
   compileOnly 'org.projectlombok:lombok'
   annotationProcessor 'org.projectlombok:lombok'

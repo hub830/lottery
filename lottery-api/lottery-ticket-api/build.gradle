@@ -1,3 +1,11 @@
+apply from: '../../maven_push.gradle'
+
+jar {
+  enabled = true
+  baseName = archivesBaseName
+  version =  VERSION_NAME
+}
+
 dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-validation'
   implementation 'org.springframework.boot:spring-boot-starter-web'

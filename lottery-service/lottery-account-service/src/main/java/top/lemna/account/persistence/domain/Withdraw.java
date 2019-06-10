@@ -52,12 +52,6 @@ public class Withdraw extends AutoIdEntity {
   private Long amount;
 
   /**
-   * 提现手续费 单位为分
-   */
-  @Column(precision = 12, scale = 2, nullable = false)
-  private Long fee;
-
-  /**
    * 提现渠道
    */
   @Column(length = 32, nullable = false)
@@ -79,5 +73,18 @@ public class Withdraw extends AutoIdEntity {
    */
   @Column(length = 256)
   private String remark;
+
+  public Withdraw(Long withdrawNo, Long accountNo, String accountInfo, Long amount,
+      WithdrawChannel channel, String remark) {
+    super();
+    this.withdrawNo = withdrawNo;
+    this.accountNo = accountNo;
+    this.accountInfo = accountInfo;
+    this.amount = amount;
+    this.channel = channel;
+    this.status = WithdrawStatus.PENDING;
+    this.remark = remark;
+  }
+
 
 }

@@ -1,6 +1,8 @@
 dependencies {
   compile project(":lottery-common-data-jpa")
   compile project(":lottery-account-api")
+  implementation 'top.lemna:lottery-common-uid:0.0.1-SNAPSHOT'
+  
   implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
   implementation 'org.springframework.boot:spring-boot-starter-validation'
   implementation 'org.springframework.boot:spring-boot-starter-web'
