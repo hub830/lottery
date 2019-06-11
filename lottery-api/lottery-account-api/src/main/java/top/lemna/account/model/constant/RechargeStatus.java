@@ -14,7 +14,7 @@ import com.google.common.collect.ImmutableMap;
 public enum RechargeStatus {
   PROCESSING("处理中"), //
   SUCCESS("成功"), //
-  REFUND("失败")//
+  CANCEL("失败")//
   ;//
 
   private String name;

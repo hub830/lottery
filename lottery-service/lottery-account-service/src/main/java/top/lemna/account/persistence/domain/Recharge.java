@@ -28,7 +28,7 @@ public class Recharge extends AutoIdEntity {
   private static final long serialVersionUID = 299101453982987455L;
 
   /**
-   * 提现订单编号
+   * 充值订单编号
    */
   @Column(length = 32, nullable = false)
   private Long rechargeNo;
@@ -53,7 +53,7 @@ public class Recharge extends AutoIdEntity {
   private RechargeChannel channel;
 
   /**
-   * 提现状态
+   * 充值状态
    */
   @Column(length = 32, nullable = false)
   @Enumerated(EnumType.STRING)
@@ -61,12 +61,16 @@ public class Recharge extends AutoIdEntity {
 
   /**
    * 备注</br>
-   * 如果是提现到银行卡 请按 开户行|户名|卡号|证件号 拼写数据 如 建设银行|张三|43921234567820|10010120011010001</br>
-   * 如果是提现到支付宝或微信，则在此处填写支付宝或微信账号</br>
-   * 另提现失败后将失败的原因拼接在原有备注后
    */
   @Column(length = 256)
   private String remark;
 
-
+  public Recharge(Long rechargeNo, Long accountNo, Long amount, RechargeChannel channel) {
+    super();
+    this.rechargeNo = rechargeNo;
+    this.accountNo = accountNo;
+    this.amount = amount;
+    this.channel = channel;
+    this.status = RechargeStatus.PROCESSING;
+  }
 }

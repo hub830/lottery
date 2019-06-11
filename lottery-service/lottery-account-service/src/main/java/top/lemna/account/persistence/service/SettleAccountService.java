@@ -15,6 +15,7 @@ import top.lemna.data.jpa.service.BaseService;
 public class SettleAccountService extends BaseService<SettleAccount> {
 
   @Autowired
+  @SuppressWarnings("unused")
   private SettleAccountRepository repository;
 
   public SettleAccount create(Long accountNo, SettleType settleType, SettleAccountType accountType,

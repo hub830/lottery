@@ -18,17 +18,17 @@ public class WithdrawStatusException extends LotteryRuntimeException {
   private WithdrawStatus sourceStatus;
 
 
-  /** 目标状态 */
-  private WithdrawStatus targeetStatus;
+  /** 期待状态 */
+  private WithdrawStatus expectStatus;
 
 
   public WithdrawStatusException(Long withdrawNo, WithdrawStatus sourceStatus,
-      WithdrawStatus targeetStatus) {
-    super(format("提现状态不正确 withdrawNo:{} ,sourceStatus:{}, targeetStatus:{}, amount:{}", withdrawNo,
-        sourceStatus, targeetStatus));
+      WithdrawStatus expectStatus) {
+    super(format("提现状态不正确 withdrawNo:{} ,sourceStatus:{}, expectStatus:{}", withdrawNo,
+        sourceStatus, expectStatus));
     this.withdrawNo = withdrawNo;
     this.sourceStatus = sourceStatus;
-    this.targeetStatus = targeetStatus;
+    this.expectStatus = expectStatus;
   }
 
 }

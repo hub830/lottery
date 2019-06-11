@@ -20,7 +20,6 @@ import top.lemna.data.jpa.service.BaseService;
 @Transactional
 public class WithdrawService extends BaseService<Withdraw> {
 
-  @SuppressWarnings("unused")
   @Autowired
   private WithdrawRepository repository;
 
