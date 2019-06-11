@@ -11,7 +11,7 @@ sourceCompatibility = 1.8
 
 allprojects {
   repositories {
-//    maven { url "http://10.0.0.10:8020/repository/maven-public/" }
+    //    maven { url "http://10.0.0.10:8020/repository/maven-public/" }
     maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
     maven { url "http://192.168.10.10:8081/repository/maven-public/" }
     jcenter()
@@ -29,6 +29,7 @@ subprojects {
   apply plugin: 'io.spring.dependency-management'
   dependencies {
     compile ('org.springframework.boot:spring-boot-starter-web')
+    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.58'
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testImplementation('org.junit.jupiter:junit-jupiter-api:5.2.0')
     testCompile('org.junit.jupiter:junit-jupiter-params:5.2.0')
@@ -39,8 +40,23 @@ subprojects {
 
   ext {
     set('springCloudVersion', "Greenwich.SR1")
+    env = System.getProperty("env") ?: "dev"
   }
 
+  sourceSets {
+    main {
+      //
+      resources {
+        srcDirs = ["src/main/resources/public", "src/main/resources/$env"]
+      }
+    }
+    test {
+      java {
+        //
+        srcDir 'src/test/java'//
+      } //
+    }
+  }
   dependencyManagement {
     resolutionStrategy { cacheChangingModulesFor 0, 'seconds' }
     imports {

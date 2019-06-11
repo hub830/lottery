@@ -13,29 +13,18 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper=false)
-public class BankSettleAccountInfoDto extends SettleAccountInfoDto{
-
+@EqualsAndHashCode(callSuper = false)
+public class BankSettleAccountInfoDto extends SettleAccountInfoDto {
 
   /** 身份证号 */
   private String identityNo;
 
-  /** 开户名 */
-  private String accountName;
+  private DepositBankDto depositBank;
 
-  /** 开户行名称 */
-  private String bankName;
-
-  /** 联行号 */
-  private String alliedBankCode;
-
-  /** 开户名银行卡号 */
-  private String bankAccountNo;
-
-  /** 开户行总行编号 */
-  private String bankCode;
-  
-  /** 区域 */
-  private String area;
-
+  public BankSettleAccountInfoDto(String accountName, String accountNo, String identityNo,
+      DepositBankDto depositBank) {
+    super(accountName, accountNo);
+    this.identityNo = identityNo;
+    this.depositBank = depositBank;
+  }
 }

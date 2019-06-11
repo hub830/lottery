@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * 
- *   结算账号类型信息
+ * 结算账号类型信息
  * 
  * @author fox
  *
@@ -17,9 +17,15 @@ public class SettleAccountInfoDto {
 
   /** 结算账号名称 */
   @NotNull
-  private String settleAccountName;
+  private String accountName;
 
   /** 结算账号 */
   @NotNull
-  private String settleAccountNo;
+  private String accountNo;
+
+  public SettleAccountInfoDto(@NotNull String accountName, @NotNull String accountNo) {
+    super();
+    this.accountName = accountName;
+    this.accountNo = accountNo;
+  }
 }
