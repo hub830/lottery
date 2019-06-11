@@ -1,6 +1,11 @@
 package top.lemna.account.persistence.service;
 
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
+import org.hamcrest.core.IsInstanceOf;
+import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,7 +17,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.baidu.fsg.uid.UidGenerator;
 import top.lemna.account.model.constant.SettleAccountType;
 import top.lemna.account.model.constant.SettleType;
+import top.lemna.account.model.dto.AlipaySettleAccountInfoDto;
 import top.lemna.account.model.dto.SettleAccountInfoDto;
+import top.lemna.account.persistence.domain.SettleAccount;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -45,7 +52,18 @@ class SettleAccountServiceTest {
   @Test
   void testCreate() {
     when(uidGenerator.getUID()).thenReturn(8001L);
-    service.create(accountNo, settleType, accountType, accountInfo);
+    SettleAccount settleAccount = service.create(accountNo, settleType, accountType, accountInfo);
+    assertThat(settleAccount,notNullValue());
+    assertThat(settleAccount.getId(),greaterThan(0L));
+  }
+
+  @Test
+  void testFindById() {
+    SettleAccount settleAccount = service.findById(1L);
+    
+    SettleAccountInfoDto accountInfoDto = settleAccount.getSettleAccountInfo();
+    assertThat(accountInfoDto,instanceOf(AlipaySettleAccountInfoDto.class));
+    assertThat(settleAccount.getId(),is(1L));
   }
 
 }
