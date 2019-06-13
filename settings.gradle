@@ -17,6 +17,8 @@ include ':lottery-common-utils'
 project (':lottery-common-utils').projectDir = new File(rootDir, 'lottery-common/lottery-common-utils')
 include ':lottery-common-data-jpa'
 project (':lottery-common-data-jpa').projectDir = new File(rootDir, 'lottery-common/lottery-common-data-jpa')
+include ':lottery-common-securit-oauth2'
+project (':lottery-common-securit-oauth2').projectDir = new File(rootDir, 'lottery-common/lottery-common-securit-oauth2')
 
 
 include ':lottery-account-api'

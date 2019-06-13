@@ -1,8 +1,7 @@
-package top.lemna.account.web.service;
+package top.lemna.account.web.admin;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.lemna.account.persistence.domain.Account;
@@ -13,8 +12,8 @@ public class AccountController
 {
  
 
-  @GetMapping("/{accountNo}")
-  public List<Account> get(@PathVariable Long accountNo) {
+  @GetMapping
+  public List<Account> list() {
  
     return null;
   }
